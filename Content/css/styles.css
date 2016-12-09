@@ -1,0 +1,21 @@
+/*font-family: 'Roboto', sans-serif;
+font-family: 'Open Sans', sans-serif;*/
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Roboto', sans-serif;
+}
+
+p, a, ul, li {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container-fluid {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.gray-line {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
