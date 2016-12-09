@@ -39,6 +39,20 @@ namespace Salon
       Assert.Equal(expectedResult, Stylist.GetAll());
     }
 
+    [Fact]
+    public void Update_ChangesValuesInDatabase_EquivalentObject()
+    {
+      //Arrange
+      Stylist testStylist = new Stylist("Jane Doe", "503-123-4567");
+      testStylist.Save();
+      Stylist expectedResult = new Stylist("Jane Doe", "503-891-0123", testStylist.GetId());
+      //Act
+      testStylist.Update("Jane Doe", "503-891-0123");
+      Stylist retrievedStylist = Stylist.Find(testStylist.GetId());
+      //Assert
+      Assert.Equal(expectedResult, retrievedStylist);
+    }
+
     public void Dispose()
     {
       Stylist.DeleteAll();

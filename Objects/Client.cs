@@ -59,9 +59,9 @@ namespace Salon
 
 			while (rdr.Read())
 			{
-				name = rdr.GetString(1);
-        phoneNumber = rdr.GetString(2);
-        stylistId = rdr.GetInt32(3);
+				name = rdr.GetString(0);
+        phoneNumber = rdr.GetString(1);
+        stylistId = rdr.GetInt32(2);
 			}
 			if (rdr != null)
 			{

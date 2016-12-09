@@ -69,6 +69,20 @@ namespace Salon
 			return new Stylist(name, phoneNumber, id);
 		}
 
+    public void Update(string newName, string newPhoneNumber)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE stylists SET name = @new_name, phone_number = @new_phone_number WHERE id = @id", conn);
+      cmd.Parameters.AddWithValue("@new_name", newName);
+      cmd.Parameters.AddWithValue("@new_phone_number", newPhoneNumber);
+      cmd.Parameters.AddWithValue("@id", _id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+    }
+
     public static void Delete(int id)
 		{
 			SqlConnection conn = DB.Connection();
