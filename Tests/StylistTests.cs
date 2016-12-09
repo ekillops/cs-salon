@@ -68,6 +68,7 @@ namespace Salon
       //Assert
       Assert.Equal(expectedMatches, matches.Count);
     }
+
     public void Dispose()
     {
       Stylist.DeleteAll();

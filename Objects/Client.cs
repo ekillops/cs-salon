@@ -77,7 +77,7 @@ namespace Salon
 			SqlConnection conn = DB.Connection();
 			conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT name, phone_number, stylist_id, FROM clients WHERE id = @id;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT name, phone_number, stylist_id FROM clients WHERE id = @id;", conn);
       cmd.Parameters.AddWithValue("@id", id);
 
 			SqlDataReader rdr = cmd.ExecuteReader();
@@ -173,6 +173,56 @@ namespace Salon
 			cmd.ExecuteNonQuery();
 			conn.Close();
 		}
+
+    public static List<Client> SearchByValue(string columnToCheck, string searchInput)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand();
+      cmd.Connection = conn;
+      string input = "%"+searchInput+"%";
+
+      switch (columnToCheck)
+      {
+        case "name":
+            cmd.CommandText = "SELECT * FROM clients WHERE name LIKE @input";
+            break;
+        case "phone_number":
+            cmd.CommandText = "SELECT * FROM clients WHERE phone_number LIKE @input";
+            break;
+        default:
+            break;
+      }
+      cmd.Parameters.AddWithValue("@input", input);
+
+      List<Client> searchResults = new List<Client> {};
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+      int foundId = 0;
+      string foundName = null;
+      string foundPhoneNumber = null;
+      int foundStylistId = 0;
+
+      while (rdr.Read())
+      {
+        foundId = rdr.GetInt32(0);
+        foundName = rdr.GetString(1);
+        foundPhoneNumber = rdr.GetString(2);
+        foundStylistId = rdr.GetInt32(3);
+        Client foundClient = new Client(foundName, foundPhoneNumber, foundStylistId, foundId);
+        searchResults.Add(foundClient);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return searchResults;
+    }
 
     //GETTERS AND SETTERS
     public void SetName(string newName)
