@@ -1,6 +1,5 @@
 using Nancy;
 using System.Collections.Generic;
-using BestRestaurants.Objects;
 
 namespace Salon
 {

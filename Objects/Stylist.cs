@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -29,10 +30,10 @@ namespace Salon
         bool idEquality = (this.GetId() == newStylist.GetId());
         bool nameEquality = (this.GetName() == newStylist.GetName());
         bool phoneNumberEquality = (this.GetPhoneNumber() == newStylist.GetPhoneNumber());
-
         return (idEquality && nameEquality && phoneNumberEquality);
       }
     }
+
     public override int GetHashCode()
 		{
 			return _name.GetHashCode();
@@ -46,15 +47,15 @@ namespace Salon
       SqlCommand cmd = new SqlCommand("SELECT name, phone_number FROM stylists WHERE id = @id;", conn);
       cmd.Parameters.AddWithValue("@id", id);
 
-			SqlDataReader rdr = cmd.ExecuteReader();
-
-			string name = null;
+      string name = null;
       string phoneNumber = null;
+
+      SqlDataReader rdr = cmd.ExecuteReader();
 
 			while (rdr.Read())
 			{
-				name = rdr.GetString(1);
-        phoneNumber = rdr.GetString(2);
+				name = rdr.GetString(0);
+        phoneNumber = rdr.GetString(1);
 			}
 			if (rdr != null)
 			{
@@ -75,7 +76,7 @@ namespace Salon
 			SqlCommand cmd = new SqlCommand("DELETE FROM stylists WHERE id = @id", conn);
 			cmd.Parameters.AddWithValue("@id", id);
 
-			SqlDataReader rdr = cmd.ExecuteNonQuery();
+			cmd.ExecuteNonQuery();
 			conn.Close();
 		}
 
@@ -123,7 +124,7 @@ namespace Salon
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("INSERT INTO clients (name, phone_number) OUTPUT INSERTED.id VALUES (@name, @phone_number);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO stylists (name, phone_number) OUTPUT INSERTED.id VALUES (@name, @phone_number);", conn);
 
       cmd.Parameters.AddWithValue("@name", this.GetName());
       cmd.Parameters.AddWithValue("@phone_number", this.GetPhoneNumber());

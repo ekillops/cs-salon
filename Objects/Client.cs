@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,7 +12,7 @@ namespace Salon
     private int _stylistId;
     private int _id;
 
-    public Client(string name, string phoneNumber = "000-000-0000", int _stylistId = 0, int id = 0)
+    public Client(string name, string phoneNumber = "000-000-0000", int stylistId = 0, int id = 0)
     {
       _name = name;
       _phoneNumber = phoneNumber;
@@ -81,7 +82,7 @@ namespace Salon
 			SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @id", conn);
 			cmd.Parameters.AddWithValue("@id", id);
 
-			SqlDataReader rdr = cmd.ExecuteNonQuery();
+			cmd.ExecuteNonQuery();
 			conn.Close();
 		}
 
@@ -189,5 +190,5 @@ namespace Salon
     {
       return _id;
     }
-
+  }
 }
