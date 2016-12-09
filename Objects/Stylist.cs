@@ -39,6 +39,34 @@ namespace Salon
 			return _name.GetHashCode();
 		}
 
+    //CREATE
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("INSERT INTO stylists (name, phone_number) OUTPUT INSERTED.id VALUES (@name, @phone_number);", conn);
+
+      cmd.Parameters.AddWithValue("@name", this.GetName());
+      cmd.Parameters.AddWithValue("@phone_number", this.GetPhoneNumber());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    //READ
     public static Stylist Find(int id)
 		{
 			SqlConnection conn = DB.Connection();
@@ -69,6 +97,7 @@ namespace Salon
 			return new Stylist(name, phoneNumber, id);
 		}
 
+    //UPDATE
     public void Update(string newName, string newPhoneNumber)
     {
       SqlConnection conn = DB.Connection();
@@ -83,6 +112,7 @@ namespace Salon
       conn.Close();
     }
 
+    //DESTROY
     public static void Delete(int id)
 		{
 			SqlConnection conn = DB.Connection();
@@ -134,32 +164,6 @@ namespace Salon
       conn.Close();
     }
 
-    public void Save()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-      SqlCommand cmd = new SqlCommand("INSERT INTO stylists (name, phone_number) OUTPUT INSERTED.id VALUES (@name, @phone_number);", conn);
-
-      cmd.Parameters.AddWithValue("@name", this.GetName());
-      cmd.Parameters.AddWithValue("@phone_number", this.GetPhoneNumber());
-
-      SqlDataReader rdr = cmd.ExecuteReader();
-
-      while (rdr.Read())
-      {
-        this._id = rdr.GetInt32(0);
-      }
-
-      if (rdr != null)
-      {
-        rdr.Close();
-      }
-      if (conn != null)
-      {
-        conn.Close();
-      }
-    }
-
     public List<Client> GetClients()
 		{
 			List<Client> returnList = new List<Client> {};
@@ -192,6 +196,55 @@ namespace Salon
 			return returnList;
     }
 
+    public static List<Stylist> SearchByValue(string columnToCheck, string searchInput)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand();
+      cmd.Connection = conn;
+      string input = "%"+searchInput+"%";
+
+      switch (columnToCheck)
+      {
+        case "name":
+            cmd.CommandText = "SELECT * FROM stylists WHERE name LIKE @input";
+            break;
+        case "phone_number":
+            cmd.CommandText = "SELECT * FROM stylists WHERE phone_number LIKE @input";
+            break;
+        default:
+            break;
+      }
+      cmd.Parameters.AddWithValue("@input", input);
+
+      List<Stylist> searchResults = new List<Stylist> {};
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+      int foundId = 0;
+      string foundName = null;
+      string foundPhoneNumber = null;
+
+      while (rdr.Read())
+      {
+        foundId = rdr.GetInt32(0);
+        foundName = rdr.GetString(1);
+        foundPhoneNumber = rdr.GetString(2);
+        Stylist foundStylist = new Stylist(foundName, foundPhoneNumber, foundId);
+        searchResults.Add(foundStylist);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return searchResults;
+    }
+
+    //GETTERS AND SETTERS
     public void SetName(string newName)
     {
       _name = newName;

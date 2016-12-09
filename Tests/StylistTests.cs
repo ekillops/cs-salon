@@ -53,6 +53,21 @@ namespace Salon
       Assert.Equal(expectedResult, retrievedStylist);
     }
 
+    [Theory]
+    [InlineData("name", "Jane", 1)]
+    [InlineData("phone_number", "233-4555", 1)]
+    public void Search_FindsResultsBasedOnInputTheory(string searchColumn, string searchValue, int expectedMatches)
+    {
+      //Arrange
+      Stylist testOne = new Stylist("Jane Doe", "503-123-4567");
+      Stylist testTwo = new Stylist("John Davis", "503-233-4555");
+      testOne.Save();
+      testTwo.Save();
+      //Act
+      List<Stylist> matches = Stylist.SearchByValue(searchColumn, searchValue);
+      //Assert
+      Assert.Equal(expectedMatches, matches.Count);
+    }
     public void Dispose()
     {
       Stylist.DeleteAll();

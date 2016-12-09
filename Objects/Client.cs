@@ -43,6 +43,35 @@ namespace Salon
 			return _name.GetHashCode();
 		}
 
+    //CREATE
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("INSERT INTO clients (name, phone_number, stylist_id) OUTPUT INSERTED.id VALUES (@name, @phone_number, @stylist_id);", conn);
+
+      cmd.Parameters.AddWithValue("@name", this.GetName());
+      cmd.Parameters.AddWithValue("@phone_number", this.GetPhoneNumber());
+      cmd.Parameters.AddWithValue("@stylist_id", this.GetStylistId());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    //READ
     public static Client Find(int id)
 		{
 			SqlConnection conn = DB.Connection();
@@ -75,6 +104,23 @@ namespace Salon
 			return new Client(name, phoneNumber, stylistId, id);
 		}
 
+    //UPDATE
+    public void Update(string newName, string newPhoneNumber, int newStylistId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE clients SET name = @new_name, phone_number = @new_phone_number, stylist_id = @new_stylist_id WHERE id = @id", conn);
+      cmd.Parameters.AddWithValue("@new_name", newName);
+      cmd.Parameters.AddWithValue("@new_phone_number", newPhoneNumber);
+      cmd.Parameters.AddWithValue("@new_stylist_id", newStylistId);
+      cmd.Parameters.AddWithValue("@id", _id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+    }
+
+    //DESTROY
     public static void Delete(int id)
 		{
 			SqlConnection conn = DB.Connection();
@@ -128,33 +174,7 @@ namespace Salon
 			conn.Close();
 		}
 
-    public void Save()
-		{
-			SqlConnection conn = DB.Connection();
-			conn.Open();
-			SqlCommand cmd = new SqlCommand("INSERT INTO clients (name, phone_number, stylist_id) OUTPUT INSERTED.id VALUES (@name, @phone_number, @stylist_id);", conn);
-
-			cmd.Parameters.AddWithValue("@name", this.GetName());
-      cmd.Parameters.AddWithValue("@phone_number", this.GetPhoneNumber());
-      cmd.Parameters.AddWithValue("@stylist_id", this.GetStylistId());
-
-      SqlDataReader rdr = cmd.ExecuteReader();
-
-			while (rdr.Read())
-			{
-				this._id = rdr.GetInt32(0);
-			}
-
-			if (rdr != null)
-			{
-				rdr.Close();
-			}
-			if (conn != null)
-			{
-				conn.Close();
-			}
-    }
-
+    //GETTERS AND SETTERS
     public void SetName(string newName)
     {
       _name = newName;

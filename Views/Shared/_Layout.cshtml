@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="../../Content/css/styles.css">
+    <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="container-fluid">
@@ -17,22 +22,22 @@
             <li role="presentation"><a href="#">Clients</a></li>
           </ul>
         </div><!-- /nav -->
-        <div class="col-md-4" id="stylist-search">
+        <div class="col-md-2"></div><!--spacer-column-->
+        <div class="col-md-6" id="search">
           <div class="input-group">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Search</button>
-            </span>
-            <input type="text" class="form-control" name="stylist-search" placeholder="Search stylists...">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Stylist Name</a></li>
+                <li><a href="#">Stylist Phone</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Client Name</a></li>
+                <li><a href="#">Client Phone</a></li>
+              </ul>
+            </div><!-- /btn-group -->
+            <input type="text" class="form-control" aria-label="...">
           </div><!-- /input-group -->
-        </div><!-- /stylist-search -->
-        <div class="col-md-4" id="client-search">
-          <div class="input-group">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Search</button>
-            </span>
-            <input type="text" class="form-control" name="client-search" placeholder="Search clients...">
-          </div><!-- /input-group -->
-        </div><!-- /client-search -->
+        </div>
       </div><!-- /head-row -->
       <div class="page-header">
         <h1>CS Salon</h1>
