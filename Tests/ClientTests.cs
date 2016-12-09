@@ -46,9 +46,10 @@ namespace Salon
       Client testClient = new Client("Sally Smith", "503-111-2222", 1);
       testClient.Save();
       Client expectedResult = new Client("Sally Smith", "503-111-2222", 2, testClient.GetId());
+      int targetId = testClient.GetId();
       //Act
-      testClient.Update("Sally Smith", "503-111-2222", 2);
-      Client retrievedClient = Client.Find(testClient.GetId());
+      Client.Update(targetId, "Sally Smith", "503-111-2222", 2);
+      Client retrievedClient = Client.Find(targetId);
       //Assert
       Assert.Equal(expectedResult, retrievedClient);
     }

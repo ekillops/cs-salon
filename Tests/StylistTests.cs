@@ -45,10 +45,11 @@ namespace Salon
       //Arrange
       Stylist testStylist = new Stylist("Jane Doe", "503-123-4567");
       testStylist.Save();
-      Stylist expectedResult = new Stylist("Jane Doe", "503-891-0123", testStylist.GetId());
+      int targetId = testStylist.GetId();
+      Stylist expectedResult = new Stylist("Jane Doe", "503-891-0123", targetId);
       //Act
-      testStylist.Update("Jane Doe", "503-891-0123");
-      Stylist retrievedStylist = Stylist.Find(testStylist.GetId());
+      Stylist.Update(targetId, "Jane Doe", "503-891-0123");
+      Stylist retrievedStylist = Stylist.Find(targetId);
       //Assert
       Assert.Equal(expectedResult, retrievedStylist);
     }

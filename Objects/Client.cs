@@ -105,7 +105,7 @@ namespace Salon
 		}
 
     //UPDATE
-    public void Update(string newName, string newPhoneNumber, int newStylistId)
+    public static void Update(int targetId, string newName, string newPhoneNumber, int newStylistId)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
@@ -114,7 +114,7 @@ namespace Salon
       cmd.Parameters.AddWithValue("@new_name", newName);
       cmd.Parameters.AddWithValue("@new_phone_number", newPhoneNumber);
       cmd.Parameters.AddWithValue("@new_stylist_id", newStylistId);
-      cmd.Parameters.AddWithValue("@id", _id);
+      cmd.Parameters.AddWithValue("@id", targetId);
 
       cmd.ExecuteNonQuery();
       conn.Close();
@@ -222,6 +222,38 @@ namespace Salon
         conn.Close();
       }
       return searchResults;
+    }
+
+    public Stylist GetStylist()
+    {
+      SqlConnection conn = DB.Connection();
+			conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylists WHERE id = @id;", conn);
+      cmd.Parameters.AddWithValue("@id", _stylistId);
+
+      int id = 0;
+      string name = null;
+      string phoneNumber = null;
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+			while (rdr.Read())
+			{
+        id = rdr.GetInt32(0);
+				name = rdr.GetString(1);
+        phoneNumber = rdr.GetString(2);
+			}
+			if (rdr != null)
+			{
+				rdr.Close();
+			}
+			if (conn != null)
+			{
+				conn.Close();
+			}
+
+			return new Stylist(name, phoneNumber, id);
     }
 
     //GETTERS AND SETTERS

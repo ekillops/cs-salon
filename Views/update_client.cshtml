@@ -1,0 +1,25 @@
+@{
+  Layout = "Shared/_Layout.cshtml";
+  var client = Model["client"];
+  var stylists = Model["stylists"];
+}
+<br>
+<h3>EDIT CLIENT</h3>
+<br>
+<form action="/clients" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input type="hidden" name="client-id" value="@client.GetId()">
+  <label>Client Details</label>
+  <input class="form-control" type="text" name="client-name" value="@client.GetName()" required>
+  <input class="form-control" type="text" name="client-phone-number" value="@client.GetPhoneNumber()" required>
+  <label>Stylist</label>
+  <select class="form-control" name="stylist-id" required>
+    @foreach (var stylist in stylists)
+    {
+      <option value="@stylist.GetId()">@stylist.GetName()</option>
+    }
+    <option>No Preference</option>
+  </select>
+  <br>
+  <button type="submit" class="btn btn-default btn-md">Update</button>
+</form>

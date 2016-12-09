@@ -1,0 +1,32 @@
+@{
+  Layout = "Shared/_Layout.cshtml";
+  var clientList = Model.GetClients();
+}
+<br>
+<h3>@Model.GetName()</h3>
+<br>
+<p>Phone Number:</p>
+<p>@Model.GetPhoneNumber()</p>
+<br>
+<h4>Clients:</h4>
+@if(clientList.Count != 0)
+{
+  <ul>
+    @foreach(var client in clientList)
+    {
+      <li><a href="/clients/@client.GetId()">@client.GetName()</a></li>
+    }
+  </ul>
+}
+else
+{
+<p>
+  There are no clients to display.
+</p>
+}
+<a href="/stylists/@Model.GetId()/update" class="btn btn-default btn-md">Edit</a>
+<form class="form-inline" action="/stylists" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="hidden" name="stylist-id" value="@Model.GetId()">
+  <button class="btn btn-default btn-md">Delete</button>
+</form>
