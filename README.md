@@ -32,15 +32,19 @@ _A simple website for a hypothetical Salon. Allows manager to create, read, upda
 
 ## Setup/Installation Requirements
 
-_Requires Windows and .Net_
+_Requires Windows, .Net, SMSS, and SQL SERVER_
 
-Clone repository, run ">dnx kestrel" in Powershell and visit "localhost:5004".
+1. Clone repository.
+2. In SSMS, open hair_salon.sql
+3. Add "CREATE DATABASE [hair_salon]" on the first line and "GO" on the following line, and press "Enter".
+4. Save the file and click Execute.
+5. Repeat steps 2-5 for hair_salon_test.
+6. In Powershell,  run ">dnx kestrel" and visit "localhost:5004".
 
-**FILL IN DATABASE INSTRUCTIONS HERE!!!**
 
 ## Known Bugs
 
-None.
+The website does not prevent against duplicate entries. If you need to remove duplicates you will have to do it manually via their individual page.
 
 
 ## Technologies Used
