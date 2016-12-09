@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>CS Salon</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Lato|Nunito+Sans" rel="stylesheet">
     <link rel="stylesheet" href="../../Content/css/styles.css">
     <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -24,19 +23,19 @@
         </div><!-- /nav -->
         <div class="col-md-2"></div><!--spacer-column-->
         <div class="col-md-6" id="search">
-          <div class="input-group">
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#">Stylist Name</a></li>
-                <li><a href="#">Stylist Phone</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Client Name</a></li>
-                <li><a href="#">Client Phone</a></li>
-              </ul>
-            </div><!-- /btn-group -->
-            <input type="text" class="form-control" aria-label="..." placeholder="Search...">
-          </div><!-- /input-group -->
+            <div class="input-group">
+              <input type="text" class="form-control" name="search-input" placeholder="Search...">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="/stylists/search/name">Stylist Name</a></li>
+                  <li><a href="/stylists/search/phone_number">Stylist Phone</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="/clients/search/name">Client Name</a></li>
+                  <li><a href="/clients/search/phone_number">Client Phone</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
         </div>
       </div><!-- /head-row -->
       <div class="page-header">

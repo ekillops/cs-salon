@@ -70,6 +70,78 @@ namespace Salon
 				List<Client> allClients = Client.GetAll();
 				return View["all_clients.cshtml", allClients];
 			};
+
+			//Stylist Pages
+			Get["/stylists"] = _ =>
+			{
+				List<Stylist> allStylists = Stylist.GetAll();
+				return View["all_stylists.cshtml", allStylists];
+			};
+			Get["/stylists/new"] = _ =>
+			{
+				return View["new_stylist_form"];
+			};
+			Get["/stylists/{id}"] = parameters =>
+			{
+				int stylistId = int.Parse(parameters.id);
+				Stylist targetStylist = Stylist.Find(stylistId);
+				return View["stylist.cshtml", targetStylist];
+			};
+			Get["/stylists/{id}/update"] = parameters =>
+			{
+				int stylistId = int.Parse(parameters.id);
+				Stylist targetStylist = Stylist.Find(stylistId);
+				return View["update_stylist.cshtml", targetStylist];
+			};
+			Post["/stylists"] = _ =>
+			{
+				string stylistName = Request.Form["stylist-name"];
+				string stylistPhoneNumber = Request.Form["stylist-phone-number"];
+				Stylist newStylist = new Stylist(stylistName, stylistPhoneNumber);
+				newStylist.Save();
+
+				List<Stylist> allStylists = Stylist.GetAll();
+				return View["all_stylists.cshtml", allStylists];
+			};
+			Patch["/stylists"] = _ =>
+			{
+				int targetId = int.Parse(Request.Form["stylist-id"]);
+				string stylistName = Request.Form["stylist-name"];
+				string stylistPhoneNumber = Request.Form["stylist-phone-number"];
+				Stylist.Update(targetId, stylistName, stylistPhoneNumber);
+
+				List<Stylist> allStylists = Stylist.GetAll();
+				return View["all_stylists.cshtml", allStylists];
+			};
+			Delete["/stylists"] = _ =>
+			{
+				int targetId = int.Parse(Request.Form["stylist-id"]);
+				Stylist.Delete(targetId);
+				List<Stylist> allStylists = Stylist.GetAll();
+				return View["all_stylists.cshtml", allStylists];
+			};
+			Delete["/stylists/clear"] = _ =>
+			{
+				Stylist.DeleteAll();
+				List<Stylist> allStylists = Stylist.GetAll();
+				return View["all_stylists.cshtml", allStylists];
+			};
+
+			//Search
+			Get["/stylists/search/{searchBy}"] = parameters =>
+			{
+				string searchBy = parameters.searchBy;
+				string searchInput = Request.Query["search-input"];
+				List<Stylist> searchResults = Stylist.SearchByValue(searchBy, searchInput);
+				return View["stylist_search.cshtml", searchResults];
+			};
+			Get["/clients/search/{searchBy}"] = parameters =>
+			{
+				string searchBy = parameters.searchBy;
+				string searchInput = Request.Query["search-input"];
+				List<Client> searchResults = Client.SearchByValue(searchBy, searchInput);
+				return View["client_search.cshtml", searchResults];
+			};
 		}
 	}
 }

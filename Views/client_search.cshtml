@@ -1,0 +1,15 @@
+@{
+  Layout = "Shared/_Layout.cshtml";
+}
+<h3>SEARCH RESULTS</h3>
+<p>@Model.Count items match your search...</p>
+<br>
+@if (Model.Count != 0)
+{
+  @foreach (var result in Model)
+  {
+      <p>@result.GetName()</p>
+      <p><a href="/clients/@result.GetId()"><small>View page</small></a></p>
+      <br>
+  }
+}

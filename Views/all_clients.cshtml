@@ -1,7 +1,6 @@
 @{
   Layout = "Shared/_Layout.cshtml";
 }
-<br>
 <h3>ALL CLIENTS</h3>
 @if (Model.Count != 0)
 {
@@ -10,19 +9,19 @@
     @{ var stylist = client.GetStylist(); }
     <br>
     <h4>@client.GetName()</h4>
-    <p>Phone Number: @client.GetPhoneNumber()</p>
-    <br>
-    <h5>Stylist:</h5>
-    <p><a href="/stylists/@stylist.GetId()">@stylist.GetName()</a></p>
+    <h5>Phone Number: @client.GetPhoneNumber()</h5>
+    <h5>Stylist: <a href="/stylists/@stylist.GetId()">@stylist.GetName()</a></h5>
+    <p><small><a href="/clients/@client.GetId()">Visit Client Page</a></small></p>
 
   }
 }
 else
 {
+  <br>
   <p>There are no clients to display.</p>
 }
 <br>
-<a href="/clients/new" class="btn btn-default btn-md">Add New</a>
+<a href="/clients/new" class="btn btn-default btn-md" role="button">Add New</a>
 <form class="form-inline" action="/clients/clear" method="post">
   <input type="hidden" name="_method" value="DELETE">
   <button class="btn btn-default btn-md">Delete All</button>
