@@ -13,6 +13,7 @@ body {
   padding-bottom: 15px;
 }
 
+/* Imitate .page-headers gray line for use at the bottom of the page */
 .gray-line {
   display: block;
   margin-top: 20px;
@@ -20,6 +21,7 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+/* Faux button styling for instructions */
 .faux-btn {
   display: inline-block;
   padding: 1px 2px;
@@ -29,4 +31,55 @@ body {
   vertical-align: middle;
   border: 1px solid gray;
   border-radius: 3px;
+}
+
+/* Prevent <input type="submit"> default button styling */
+.not-button {
+  vertical-align:bottom;
+  overflow:visible;
+  /*font-size:1em;*/
+  display:inline;
+  background-color: transparent;
+  margin:0;
+  padding:0;
+  border:0;
+  border-bottom:1px;
+  cursor:pointer;
+}
+
+/* Prevent default min-width of 160px */
+.dropdown-menu {
+  min-width: 0px;
+}
+
+/* Copy Bootstrap style for .dropdown-menu > li > a */
+.dropdown-menu > li > input {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+.dropdown-menu > li > input:hover,
+.dropdown-menu > li > input:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+.instructions ul {
+  list-style-position: inside;
+  text-indent: -2em;
+  padding-left: 2em;
+}
+
+.instructions li {
+  padding: 5px 0;
+}
+
+.instructions span {
+  text-indent: -2em;
+  padding-left: 24px;
 }

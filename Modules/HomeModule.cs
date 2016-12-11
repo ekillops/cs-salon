@@ -1,4 +1,5 @@
 using Nancy;
+using System;
 using System.Collections.Generic;
 
 namespace Salon
@@ -134,20 +135,28 @@ namespace Salon
 			};
 
 			//Search
-			Get["/stylists/search/{searchBy}"] = parameters =>
+			Get["/{searchType}/search/{searchBy}"] = parameters =>
 			{
 				string searchBy = parameters.searchBy;
+				string searchType = parameters.searchType;
 				string searchInput = Request.Query["search-input"];
-				List<Stylist> searchResults = Stylist.SearchByValue(searchBy, searchInput);
-				return View["stylist_search.cshtml", searchResults];
+
+				if (searchType == "clients")
+				{
+					List<Client> searchResults = Client.SearchByValue(searchBy, searchInput);
+					return View["clients_search.cshtml", searchResults];
+				}
+				else if (searchType == "stylists")
+				{
+					List<Stylist> searchResults = Stylist.SearchByValue(searchBy, searchInput);
+					return View["stylists_search.cshtml", searchResults];
+				}
+				else
+				{
+					return View["index.cshtml"];
+				}
 			};
-			Get["/clients/search/{searchBy}"] = parameters =>
-			{
-				string searchBy = parameters.searchBy;
-				string searchInput = Request.Query["search-input"];
-				List<Client> searchResults = Client.SearchByValue(searchBy, searchInput);
-				return View["client_search.cshtml", searchResults];
-			};
+
 		}
 	}
 }

@@ -21,21 +21,23 @@
             <li role="presentation"><a href="/clients">Clients</a></li>
           </ul>
         </div><!-- /nav -->
-        <div class="col-md-2"></div><!--spacer-column-->
-        <div class="col-md-6" id="search">
+        <div class="col-md-4"></div><!--spacer-column-->
+        <div class="col-md-4" id="search">
+          <form method="get">
             <div class="input-group">
               <input type="text" class="form-control" name="search-input" placeholder="Search...">
               <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="/stylists/search/name">Stylist Name</a></li>
-                  <li><a href="/stylists/search/phone_number">Stylist Phone</a></li>
+                  <li><input type="submit" class="not-button" formaction="/stylists/search/name" value="Stylist Name" /></li>
+                  <li><input type="submit" class="not-button" formaction="/stylists/search/phone_number" value="Stylist Phone" /></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="/clients/search/name">Client Name</a></li>
-                  <li><a href="/clients/search/phone_number">Client Phone</a></li>
+                  <li><input type="submit" class="not-button" formaction="/clients/search/name" value="Client Name" /></li>
+                  <li><input type="submit" class="not-button" formaction="/clients/search/phone_number" value="Client Phone" /></li>
                 </ul>
               </div><!-- /btn-group -->
             </div><!-- /input-group -->
+          </form>
         </div>
       </div><!-- /head-row -->
       <div class="page-header">

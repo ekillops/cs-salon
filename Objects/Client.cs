@@ -182,7 +182,6 @@ namespace Salon
       SqlCommand cmd = new SqlCommand();
       cmd.Connection = conn;
       string input = "%"+searchInput+"%";
-
       switch (columnToCheck)
       {
         case "name":
