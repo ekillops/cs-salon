@@ -33,7 +33,13 @@ namespace Salon
 			{
 				int clientId = int.Parse(parameters.id);
 				Client targetClient = Client.Find(clientId);
-				return View["update_client.cshtml", targetClient];
+				List <Stylist> allStylists = Stylist.GetAll();
+				Dictionary<string, object> returnModel = new Dictionary<string, object>()
+				{
+					{"client", targetClient},
+					{"stylists", allStylists}
+				};
+				return View["update_client.cshtml", returnModel];
 			};
 			Post["/clients"] = _ =>
 			{
